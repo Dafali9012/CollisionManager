@@ -1,5 +1,3 @@
-import java.security.SecureRandom;
-
 public class Point extends Shape {
 
     public Point(int bound) {
