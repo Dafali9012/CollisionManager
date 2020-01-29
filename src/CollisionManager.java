@@ -50,16 +50,40 @@ public class CollisionManager {
                             testingShape.getPosition()[1] + testingShape.getRadius() < generatedShapes.get(i).getPosition()[1] - generatedShapes.get(i).getRadius())) {
                         System.out.println("\u001B[31m*collision detected*\u001B[0m");
                     } else System.out.println();
-                } else if((testingShape instanceof Square && generatedShapes.get(i) instanceof Circle) || (testingShape instanceof Circle && generatedShapes.get(i) instanceof Square)) { // circle against square check
+                } else if ((testingShape instanceof Square && generatedShapes.get(i) instanceof Circle) || (testingShape instanceof Circle && generatedShapes.get(i) instanceof Square)) { // circle against square check
                     Shape objectOne = testingShape;
                     Shape objectTwo = generatedShapes.get(i);
-                    if(testingShape instanceof Square) {
+                    if (testingShape instanceof Square) {
                         objectOne = generatedShapes.get(i);
                         objectTwo = testingShape;
                     }
-                    if(objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
-                    objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top left
-                        
+                    float distance;
+                    if (objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
+                            objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top left
+                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] - objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] + objectTwo.getRadius(), 2));
+                        if (distance <= objectOne.getRadius()) {
+                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
+                        }
+                    } else if (objectOne.getPosition()[0] - objectOne.getRadius() > objectTwo.getPosition()[0] + objectTwo.getRadius() &&
+                            objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top right
+                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] + objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] + objectTwo.getRadius(), 2));
+                        if (distance <= objectOne.getRadius()) {
+                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
+                        }
+                    } else if (objectOne.getPosition()[0] - objectOne.getRadius() > objectTwo.getPosition()[0] + objectTwo.getRadius() &&
+                            objectOne.getPosition()[1] + objectOne.getRadius() < objectTwo.getPosition()[1] - objectTwo.getRadius()) { // circle in bottom right
+                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] + objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] - objectTwo.getRadius(), 2));
+                        if (distance <= objectOne.getRadius()) {
+                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
+                        }
+                    } else if (objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
+                            objectOne.getPosition()[1] + objectOne.getRadius() < objectTwo.getPosition()[1] - objectTwo.getRadius()) { // circle in bottom left
+                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] - objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] - objectTwo.getRadius(), 2));
+                        if (distance <= objectOne.getRadius()) {
+                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
+                        }
+                    } else if () { // rect v rect test
+
                     }
                 } else System.out.println();
             }
