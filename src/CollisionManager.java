@@ -50,6 +50,17 @@ public class CollisionManager {
                             testingShape.getPosition()[1] + testingShape.getRadius() < generatedShapes.get(i).getPosition()[1] - generatedShapes.get(i).getRadius())) {
                         System.out.println("\u001B[31m*collision detected*\u001B[0m");
                     } else System.out.println();
+                } else if((testingShape instanceof Square && generatedShapes.get(i) instanceof Circle) || (testingShape instanceof Circle && generatedShapes.get(i) instanceof Square)) { // circle against square check
+                    Shape objectOne = testingShape;
+                    Shape objectTwo = generatedShapes.get(i);
+                    if(testingShape instanceof Square) {
+                        objectOne = generatedShapes.get(i);
+                        objectTwo = testingShape;
+                    }
+                    if(objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
+                    objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top left
+                        
+                    }
                 } else System.out.println();
             }
             index++;
