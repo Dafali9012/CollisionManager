@@ -3,96 +3,62 @@ import shapes.Point;
 import shapes.Shape;
 import shapes.Square;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-public class CollisionManager {
-    private static final CollisionManager instance = new CollisionManager();
+public abstract class CollisionManager {
 
-    private CollisionManager() {
-        List<Shape> generatedShapes = generateShapes(2, 2, 0);
-        collisionCheck(generatedShapes);
-    }
+    public static boolean isColliding(Shape s1, Shape s2) {
+        boolean isColliding = false;
 
-    private List<Shape> generateShapes(int numPoints, int numSquares, int numCircles) {
-        List<Shape> generatedShapes = new ArrayList<>();
-        int fieldSize = 5;
-        for (int i = numPoints; i > 0; i--) {
-            Point p = new Point(fieldSize);
-            generatedShapes.add(p);
-        }
-        for (int i = numSquares; i > 0; i--) {
-            Square s = new Square(fieldSize);
-            generatedShapes.add(s);
-        }
-        for (int i = numCircles; i > 0; i--) {
-            Circle c = new Circle(fieldSize);
-            generatedShapes.add(c);
-        }
-        return generatedShapes;
-    }
-
-    private void collisionCheck(List<Shape> generatedShapes) {
-        int index = 1;
-        Shape testingShape = generatedShapes.get(index - 1);
-        while (index < generatedShapes.size()) {
-            for (int i = index; i < generatedShapes.size(); i++) {
-                System.out.printf("testing \u001B[34m%s%s\u001B[0m against \u001B[34m%s%s\u001B[0m ", testingShape.getType(), testingShape.getInformation(), generatedShapes.get(i).getType(), generatedShapes.get(i).getInformation());
-                if ((testingShape instanceof Circle || testingShape instanceof Point) && (generatedShapes.get(i) instanceof Circle || generatedShapes.get(i) instanceof Point)) { // circle and point checks
-                    float distance = (float) Math.sqrt(Math.pow(testingShape.getPosition()[0] - generatedShapes.get(i).getPosition()[0], 2) + Math.pow(testingShape.getPosition()[1] - generatedShapes.get(i).getPosition()[1], 2));
-                    if (distance <= testingShape.getRadius() + generatedShapes.get(i).getRadius()) {
-                        System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                    } else System.out.println();
-                } else if ((testingShape instanceof Square || testingShape instanceof Point) && (generatedShapes.get(i) instanceof Square || generatedShapes.get(i) instanceof Point)) { // square and point checks
-                    if (!(testingShape.getPosition()[0] - testingShape.getRadius() > generatedShapes.get(i).getPosition()[0] + generatedShapes.get(i).getRadius() ||
-                            testingShape.getPosition()[0] + testingShape.getRadius() < generatedShapes.get(i).getPosition()[0] - generatedShapes.get(i).getRadius() ||
-                            testingShape.getPosition()[1] - testingShape.getRadius() > generatedShapes.get(i).getPosition()[1] + generatedShapes.get(i).getRadius() ||
-                            testingShape.getPosition()[1] + testingShape.getRadius() < generatedShapes.get(i).getPosition()[1] - generatedShapes.get(i).getRadius())) {
-                        System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                    } else System.out.println();
-                } else if ((testingShape instanceof Square && generatedShapes.get(i) instanceof Circle) || (testingShape instanceof Circle && generatedShapes.get(i) instanceof Square)) { // circle against square check
-                    Shape objectOne = testingShape;
-                    Shape objectTwo = generatedShapes.get(i);
-                    if (testingShape instanceof Square) {
-                        objectOne = generatedShapes.get(i);
-                        objectTwo = testingShape;
-                    }
-                    float distance;
-                    if (objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
-                            objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top left
-                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] - objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] + objectTwo.getRadius(), 2));
-                        if (distance <= objectOne.getRadius()) {
-                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                        }
-                    } else if (objectOne.getPosition()[0] - objectOne.getRadius() > objectTwo.getPosition()[0] + objectTwo.getRadius() &&
-                            objectOne.getPosition()[1] - objectOne.getRadius() > objectTwo.getPosition()[1] + objectTwo.getRadius()) { // circle in top right
-                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] + objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] + objectTwo.getRadius(), 2));
-                        if (distance <= objectOne.getRadius()) {
-                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                        }
-                    } else if (objectOne.getPosition()[0] - objectOne.getRadius() > objectTwo.getPosition()[0] + objectTwo.getRadius() &&
-                            objectOne.getPosition()[1] + objectOne.getRadius() < objectTwo.getPosition()[1] - objectTwo.getRadius()) { // circle in bottom right
-                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] + objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] - objectTwo.getRadius(), 2));
-                        if (distance <= objectOne.getRadius()) {
-                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                        }
-                    } else if (objectOne.getPosition()[0] + objectOne.getRadius() < objectTwo.getPosition()[0] - objectTwo.getRadius() &&
-                            objectOne.getPosition()[1] + objectOne.getRadius() < objectTwo.getPosition()[1] - objectTwo.getRadius()) { // circle in bottom left
-                        distance = (float) Math.sqrt(Math.pow(objectOne.getPosition()[0] - objectTwo.getPosition()[0] - objectTwo.getRadius(), 2) + Math.pow(objectOne.getPosition()[1] - objectTwo.getPosition()[1] - objectTwo.getRadius(), 2));
-                        if (distance <= objectOne.getRadius()) {
-                            System.out.println("\u001B[31m*collision detected*\u001B[0m");
-                        }
-                    } else if () { // rect v rect test
-
-                    }
-                } else System.out.println();
+        if (s1 instanceof Point) {
+            if (s2 instanceof Point) {
+                isColliding = calculatePointCollision(s1, s2);
+            } else if (s2 instanceof Circle) {
+                isColliding = calculateCircleCollision(s1, s2);
+            } else if (s2 instanceof Square) {
+                isColliding = calculateBoxCollision(s1, s2);
             }
-            index++;
-            testingShape = generatedShapes.get(index - 1);
+        } else if (s1 instanceof Circle) {
+            if (s2 instanceof Point) {
+                isColliding = calculateCircleCollision(s1, s2);
+            } else if (s2 instanceof Circle) {
+                isColliding = calculateCircleCollision(s1, s2);
+            } else if (s2 instanceof Square) {
+
+            }
+        } else if (s1 instanceof Square) {
+            if (s2 instanceof Point) {
+                isColliding = calculateBoxCollision(s1, s2);
+            } else if (s2 instanceof Circle) {
+
+            } else if (s2 instanceof Square) {
+                isColliding = calculateBoxCollision(s1, s2);
+            }
         }
+        return isColliding;
     }
 
-    public static CollisionManager getInstance() {
-        return instance;
+    private static boolean calculatePointCollision(Shape s1, Shape s2) {
+        return Arrays.equals(s1.getPosition(), s2.getPosition());
+    }
+
+    private static boolean calculateBoxCollision(Shape s1, Shape s2) {
+        boolean isColliding = false;
+        if (!(s1.getX() + s1.getRadius() < s2.getX() - s2.getRadius() ||
+                s1.getX() - s1.getRadius() > s2.getX() + s2.getRadius() ||
+                s1.getY() + s1.getRadius() < s2.getY() - s2.getRadius() ||
+                s1.getY() - s1.getRadius() > s2.getY() + s2.getRadius())) {
+            isColliding = true;
+        }
+        return isColliding;
+    }
+
+    private static boolean calculateCircleCollision(Shape s1, Shape s2) {
+        boolean isColliding = false;
+        float distance = (float)Math.sqrt((Math.pow(s1.getX() - s2.getX(), 2)+Math.pow(s1.getY()-s2.getY(), 2)));
+        if(distance < s1.getRadius() + s2.getRadius()) {
+            isColliding = true;
+        }
+        return isColliding;
     }
 }
