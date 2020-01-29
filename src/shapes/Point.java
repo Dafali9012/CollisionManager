@@ -7,7 +7,7 @@ public class Point extends Shape {
         radius = 0;
     }
 
-    public Point(int x, int y) {
+    public Point(float x, float y) {
         this.x = x;
         this.y = y;
         radius = 0;

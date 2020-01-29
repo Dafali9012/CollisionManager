@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 
 public abstract class Shape {
 
-    protected int x, y;
+    protected float x, y;
     protected float radius;
 
     protected void randomProperties(int bound) {
@@ -14,16 +14,16 @@ public abstract class Shape {
         radius = sr.nextFloat() * bound / 3;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int[] getPosition() {
-        return new int[]{x, y};
+    public float[] getPosition() {
+        return new float[]{x, y};
     }
 
     public float getRadius() {

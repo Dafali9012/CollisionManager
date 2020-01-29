@@ -4,13 +4,14 @@ import shapes.Shape;
 import shapes.Square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Application {
     private static final Application instance = new Application();
 
     private Application() {
-        List<Shape> generatedShapes = generateShapes(2, 2, 0);
+        List<Shape> generatedShapes = generateShapes(1, 1, 1);
         collisionCheck(generatedShapes);
     }
 
