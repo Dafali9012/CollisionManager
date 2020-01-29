@@ -55,8 +55,8 @@ public abstract class CollisionManager {
 
     private static boolean calculateCircleCollision(Shape s1, Shape s2) {
         boolean isColliding = false;
-        float distance = (float)Math.sqrt((Math.pow(s1.getX() - s2.getX(), 2)+Math.pow(s1.getY()-s2.getY(), 2)));
-        if(distance < s1.getRadius() + s2.getRadius()) {
+        float distance = (float) Math.sqrt((Math.pow(s1.getX() - s2.getX(), 2) + Math.pow(s1.getY() - s2.getY(), 2)));
+        if (distance < s1.getRadius() + s2.getRadius()) {
             isColliding = true;
         }
         return isColliding;

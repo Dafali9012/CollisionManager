@@ -1,6 +1,6 @@
 package shapes;
 
-public class Point extends Shape{
+public class Point extends Shape {
 
     public Point(int bound) {
         randomProperties(bound);

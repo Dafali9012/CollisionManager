@@ -10,7 +10,7 @@ public class Application {
     private static final Application instance = new Application();
 
     private Application() {
-        List<Shape> generatedShapes = generateShapes(4, 0, 0);
+        List<Shape> generatedShapes = generateShapes(2, 2, 0);
         collisionCheck(generatedShapes);
     }
 
@@ -38,7 +38,7 @@ public class Application {
         while (index < generatedShapes.size()) {
             for (int i = index; i < generatedShapes.size(); i++) {
                 System.out.printf("testing \u001B[34m%s%s\u001B[0m against \u001B[34m%s%s\u001B[0m ", testingShape.getType(), testingShape.getInformation(), generatedShapes.get(i).getType(), generatedShapes.get(i).getInformation());
-                if(CollisionManager.isColliding(testingShape, generatedShapes.get(i))) {
+                if (CollisionManager.isColliding(testingShape, generatedShapes.get(i))) {
                     System.out.println("\u001B[31m*collision detected*\u001B[0m");
                 } else {
                     System.out.println();
