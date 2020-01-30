@@ -11,13 +11,15 @@ public class Application {
     private static final Application instance = new Application();
 
     private Application() {
-        List<Shape> generatedShapes = generateShapes(1, 1, 1);
-        collisionCheck(generatedShapes);
+        do {
+            List<Shape> generatedShapes = generateShapes(Menu.numInput("Width/height of field?"), Menu.numInput("How many points?"), Menu.numInput("How many squares?"), Menu.numInput("How many circles?"));
+            collisionCheck(generatedShapes);
+        } while (Menu.restart() == 1);
     }
 
-    private List<Shape> generateShapes(int numPoints, int numSquares, int numCircles) {
+    private List<Shape> generateShapes(int size, int numPoints, int numSquares, int numCircles) {
         List<Shape> generatedShapes = new ArrayList<>();
-        int fieldSize = 5;
+        int fieldSize = size;
         for (int i = numPoints; i > 0; i--) {
             Point p = new Point(fieldSize);
             generatedShapes.add(p);

@@ -11,7 +11,7 @@ public abstract class Shape {
         SecureRandom sr = new SecureRandom();
         x = sr.nextInt(bound + 1);
         y = sr.nextInt(bound + 1);
-        radius = sr.nextFloat() * bound / 3;
+        radius = sr.nextFloat() * bound / 4;
     }
 
     public float getX() {
